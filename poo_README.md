@@ -1,98 +1,39 @@
-Encuesta de Rock
-Este proyecto implementa una encuesta interactiva sobre rock entre los años 50 y 2000 utilizando JavaScript. Los usuarios pueden votar por sus opciones favoritas y ver los resultados al final.
+Encuesta de Música - Rock en Diferentes Décadas
+Este proyecto consiste en una encuesta interactiva de música rock, creada utilizando HTML, JavaScript y principios de Programación Orientada a Objetos (POO). A continuación, se describen los componentes y la estructura del código.
 
-Descripción
-El proyecto consta de dos clases principales: Pregunta y Encuesta. La clase Pregunta maneja la lógica de cada pregunta individual, mientras que la clase Encuesta gestiona un conjunto de preguntas y coordina la interacción con el usuario.
+Descripción General
+El código está diseñado para realizar una encuesta de música enfocada en distintas épocas del rock. Los usuarios pueden seleccionar sus preferencias respondiendo preguntas sobre sus artistas, álbumes y canciones favoritos de diferentes décadas. Al finalizar, los resultados de la encuesta se muestran en la consola.
 
-Clases
-Clase Pregunta
-Representa una pregunta de la encuesta.
+Estructura del Proyecto
+HTML
+El archivo HTML contiene la estructura básica de la página web con un botón para comenzar la encuesta.
 
-Constructor
-JavaScript
+Etiqueta <button>: Un botón con el texto "Comenzar Encuesta" que permite al usuario iniciar la encuesta.
+Etiqueta <script>: Se incluye el archivo de JavaScript externo sistemaEncuestaPoo.js que contiene la lógica de la encuesta.
+JavaScript (POO)
+La lógica de la encuesta está implementada en JavaScript utilizando clases para organizar el código según los principios de Programación Orientada a Objetos.
 
-constructor(texto, opciones)
-
-texto: El texto de la pregunta.
-opciones: Un arreglo de opciones de respuesta.
-Propiedades
-texto: Almacena el texto de la pregunta.
+1. Clase Pregunta
+Atributos:
+texto: Contiene el texto de la pregunta.
 opciones: Almacena las opciones de respuesta.
-votos: Un arreglo que almacena los votos para cada opción, inicializado en cero.
-respuestaSeleccionada: Almacena la opción seleccionada por el usuario.
-Métodos
-registrarVoto(opcionIndex): Registra un voto para la opción seleccionada.
-JavaScript
+votos: Lleva un registro de los votos para cada opción.
+respuestaSeleccionada: Guarda la opción seleccionada por el usuario.
+Métodos:
+registrarVoto(opcionIndex): Registra el voto de una opción seleccionada por el usuario.
+obtenerResultado(): Devuelve el resultado de la votación de esa pregunta en formato de texto.
+2. Clase Encuesta
+Atributos:
+preguntas: Una lista de preguntas de tipo Pregunta.
+Métodos:
+registrarVotos(): Muestra las preguntas al usuario mediante un prompt para que elija una respuesta y luego registra el voto.
+mostrarResultados(): Muestra los resultados de todas las preguntas en la consola.
+3. Flujo del Programa
+Se definen un conjunto de preguntas de ejemplo en la variable preguntasIniciales, cada una creada utilizando la clase Pregunta.
+Luego, se crea una instancia de la clase Encuesta con las preguntas iniciales.
+Al hacer clic en el botón "Comenzar Encuesta", se ejecuta la encuesta, mostrando las preguntas al usuario y registrando las respuestas mediante el método registrarVotos. Finalmente, se muestran los resultados en la consola usando mostrarResultados.
+Ejecución
+Para ejecutar el programa, basta con abrir el archivo HTML en un navegador web. Al presionar el botón, el sistema comienza a hacer las preguntas y, al terminar, muestra los resultados en la consola del navegador.
 
-registrarVoto(opcionIndex) {
-    this.votos[opcionIndex] += 1;
-    this.respuestaSeleccionada = opcionIndex;
-}
-
-obtenerResultado(): Devuelve los resultados de la pregunta en formato de texto.
-JavaScript
-
-obtenerResultado() {
-    return this.opciones.map((opcion, index) => `${opcion}: ${this.votos[index]} votos`).join("\n");
-}
-
-Clase Encuesta
-Representa una encuesta compuesta por múltiples preguntas.
-
-Constructor
-JavaScript
-
-constructor(preguntas)
-
-preguntas: Un arreglo de objetos Pregunta.
-Propiedades
-preguntas: Almacena una lista de preguntas.
-Métodos
-registrarVotos(): Registra los votos de los usuarios utilizando prompt.
-JavaScript
-
-registrarVotos() {
-    this.preguntas.forEach((pregunta, index) => {
-        let respuesta = -1;
-        while (respuesta < 1 || respuesta > pregunta.opciones.length || isNaN(respuesta)) {
-            let mensaje = `Pregunta ${index + 1}: ${pregunta.texto}\n`;
-            pregunta.opciones.forEach((opcion, i) => {
-                mensaje += `${i + 1}: ${opcion}\n`;
-            });
-            respuesta = parseInt(prompt(mensaje));
-        }
-        pregunta.registrarVoto(respuesta - 1);
-    });
-}
-
-mostrarResultados(): Muestra los resultados de la encuesta en la consola.
-JavaScript
-
-mostrarResultados() {
-    console.clear();
-    console.log("Resultados de la encuesta:");
-    this.preguntas.forEach((pregunta, index) => {
-        console.log(`Pregunta ${index + 1}: ${pregunta.texto}`);
-        console.log(pregunta.obtenerResultado());
-        console.log("--------------------");
-    });
-}
-
-Uso
-Define las preguntas de la encuesta utilizando la clase Pregunta.
-Crea una instancia de Encuesta con las preguntas definidas.
-Agrega un evento al botón para comenzar la encuesta y registrar los votos.
-JavaScript
-
-const preguntasIniciales = [
-    new Pregunta('¿Quién es tu artista favorito de los años 50?', ['Chuck Berry', 'Elvis Presley', 'Little Richard']),
-    new Pregunta('¿Cuál es tu álbum favorito de los años 60?', ['Sgt. Pepper\'s Lonely Hearts Club Band - The Beatles', 'Let It Bleed - The Rolling Stones', 'Tommy - The Who']),
-    // Más preguntas...
-];
-
-let encuesta = new Encuesta(preguntasIniciales);
-
-document.getElementById('comenzar-encuesta').addEventListener('click', function() {
-    encuesta.registrarVotos();
-    encuesta.mostrarResultados();
-});
+Conclusión
+Este proyecto implementa una encuesta simple utilizando principios de Programación Orientada a Objetos en JavaScript, donde las clases permiten modularizar y organizar el código de manera eficiente, facilitando su expansión y mantenimiento.

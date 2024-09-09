@@ -1,110 +1,73 @@
-Encuesta de Rock
-Este proyecto implementa una encuesta interactiva sobre rock entre los años 50 y 2000 utilizando JavaScript. Los usuarios pueden votar por sus opciones favoritas y ver los resultados acumulados al final.
+Encuesta de Rock - README
+Descripción del Proyecto
+Este proyecto implementa una encuesta interactiva sobre rock a lo largo de las décadas. La aplicación está diseñada usando HTML y JavaScript bajo un enfoque de programación funcional, donde las funciones se tratan como ciudadanos de primera clase. El propósito es permitir a los usuarios participar en la encuesta, registrar sus votos y ver los resultados directamente en la consola del navegador.
 
-Descripción
-El proyecto consta de varias funciones que permiten crear preguntas, registrar votos, obtener resultados y gestionar la encuesta. La encuesta se realiza a través de prompt y los resultados se muestran en la consola. El código está escrito en un estilo de programación funcional.
+Características
+Encuesta dinámica: El usuario puede responder una serie de preguntas relacionadas con el rock.
+Registro de votos: Los votos de los usuarios se almacenan y se pueden revisar los resultados acumulados.
+Resultados en consola: Los resultados de la encuesta se muestran en la consola del navegador una vez que el usuario finaliza.
+Reinicio de encuesta: La encuesta puede ser reiniciada para volver a realizarla sin perder los votos acumulados.
+Estructura del Proyecto
+HTML (index.html)
+El archivo HTML define la estructura básica de la aplicación con un botón que permite al usuario comenzar la encuesta.
 
-Funciones
-crearPregunta
-Crea una nueva pregunta con sus opciones de respuesta.
+html
+Copiar código
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Rock</title>
+    <script src="sistemaEncuestaPf.js" defer></script> 
+</head>
+<body>
+    <h1>Encuesta de Rock</h1>
+    <p>Participa en nuestra encuesta sobre rock a lo largo de las décadas.</p>
+    <div>
+        <button id="comenzarEncuestaBtn">Comenzar Encuesta</button>
+    </div>
+    <h4>Los resultados se pueden revisar en la consola</h4>
+</body>
+</html>
 
-JavaScript
 
-const crearPregunta = (texto, opciones) => ({
-    texto,
-    opciones,
-    votos: new Array(opciones.length).fill(0), // Arreglo para almacenar votos
-    respuestaSeleccionada: null // Guarda la opción seleccionada
-});
+JavaScript (sistemaEncuestaPf.js)
+Este archivo contiene toda la lógica de la encuesta utilizando un paradigma funcional. Las funciones clave incluyen:
 
-registrarVoto
-Registra un voto para una opción específica de una pregunta.
+crearPregunta: Genera un objeto que representa una pregunta y sus posibles respuestas.
+registrarVoto: Registra el voto del usuario en una opción específica.
+obtenerResultado: Devuelve los resultados acumulados para cada pregunta.
+crearEncuesta: Crea una encuesta a partir de un conjunto de preguntas.
+realizarEncuesta: Interactúa con el usuario usando prompt para obtener las respuestas.
+mostrarResultadosConsola: Muestra los resultados acumulados en la consola del navegador.
+reiniciarEncuesta: Permite reiniciar las respuestas seleccionadas sin perder los votos acumulados.
+Ejecución del Código
+Cuando el documento HTML se carga, el script escucha un evento de clic en el botón "Comenzar Encuesta", que desencadena las siguientes acciones:
 
-JavaScript
+Inicia la encuesta mostrando las preguntas en ventanas emergentes (prompt).
+Registra las respuestas del usuario.
+Muestra los resultados acumulados en la consola.
+Ejemplo de Uso
+Cargar el archivo HTML en un navegador.
+Hacer clic en el botón "Comenzar Encuesta".
+Responder las preguntas en los cuadros de diálogo.
+Observar los resultados en la consola.
+Programación Funcional
+El código fue implementado siguiendo los principios de programación funcional, donde se destacan:
 
-const registrarVoto = (pregunta, opcionIndex) => {
-    pregunta.votos[opcionIndex] += 1; // Aumenta el voto de la opción seleccionada
-    pregunta.respuestaSeleccionada = opcionIndex; // Guarda la opción seleccionada
-};
+Funciones puras: Las funciones no tienen efectos secundarios y siempre devuelven el mismo resultado para las mismas entradas (por ejemplo, crearPregunta, registrarVoto).
+Inmutabilidad: Los votos se actualizan sin modificar el estado global directamente.
+Uso de funciones de orden superior: Algunas funciones como forEach y map se utilizan para iterar sobre las preguntas y opciones, evitando bucles imperativos.
+Instalación
+Clonar el repositorio o descargar los archivos.
+Abrir el archivo index.html en cualquier navegador.
+Autor
+Este proyecto fue creado con un enfoque en la programación funcional y con el objetivo de realizar una encuesta simple pero interactiva en JavaScript.
 
-obtenerResultado
-Obtiene los resultados acumulados de una pregunta.
 
-JavaScript
 
-const obtenerResultado = (pregunta, numeroPregunta) => 
-    `Pregunta ${numeroPregunta}: ${pregunta.texto}\n` + 
-    pregunta.opciones.map((opcion, index) => `${index + 1}: ${opcion} - ${pregunta.votos[index]} votos`).join("\n");
 
-crearEncuesta
-Crea una encuesta a partir de un arreglo de preguntas.
 
-JavaScript
 
-const crearEncuesta = (preguntas) => preguntas;
-Código generado por IA. Revisar y usar cuidadosamente. Más información sobre preguntas frecuentes.
-realizarEncuesta
-Realiza la encuesta preguntando al usuario a través de prompt.
 
-JavaScript
-
-const realizarEncuesta = (encuesta) => {
-    encuesta.forEach((pregunta, index) => {
-        let respuesta = null;
-        while (respuesta === null || isNaN(respuesta) || respuesta < 1 || respuesta > pregunta.opciones.length) {
-            const opcionesTexto = pregunta.opciones.map((opcion, i) => `${i + 1}: ${opcion}`).join('\n');
-            respuesta = parseInt(prompt(`Pregunta ${index + 1}: ${pregunta.texto}\n${opcionesTexto}`));
-        }
-        registrarVoto(pregunta, respuesta - 1); // Restamos 1 para ajustar al índice del array
-    });
-};
-
-mostrarResultadosConsola
-Muestra los resultados acumulados de la encuesta en la consola.
-
-JavaScript
-
-const mostrarResultadosConsola = (encuesta) => {
-    console.clear(); // Limpia la consola antes de mostrar los nuevos resultados
-    console.log("Resultados acumulados de la encuesta:");
-    encuesta.forEach((pregunta, index) => {
-        console.log(obtenerResultado(pregunta, index + 1));
-    });
-};
-
-reiniciarEncuesta
-Reinicia las respuestas seleccionadas sin borrar los votos acumulados.
-
-JavaScript
-
-const reiniciarEncuesta = (encuesta) => {
-    encuesta.forEach(pregunta => {
-        pregunta.respuestaSeleccionada = null; // Reinicia las respuestas seleccionadas, pero no los votos
-    });
-};
-
-Uso
-Define las preguntas de la encuesta utilizando la función crearPregunta.
-Crea una instancia de la encuesta con las preguntas definidas.
-Agrega un evento al botón para comenzar la encuesta y registrar los votos.
-JavaScript
-
-document.addEventListener('DOMContentLoaded', () => {
-    const preguntasIniciales = [
-        crearPregunta('¿Quién es tu artista favorito de los años 50?', ['Chuck Berry', 'Elvis Presley', 'Little Richard']),
-        crearPregunta('¿Cuál es tu álbum favorito de los años 60?', ['Sgt. Pepper\'s Lonely Hearts Club Band - The Beatles', 'Let It Bleed - The Rolling Stones', 'Tommy - The Who']),
-        crearPregunta('¿Qué actuación en vivo de los años 70 te parece más icónica?', ['Jimi Hendrix en Woodstock', 'Led Zeppelin en Madison Square Garden', 'Queen en Live Aid']),
-        crearPregunta('¿Cuál es tu álbum favorito de Pink Floyd?', ['The Wall', 'Wish You Were Here', 'The Dark Side of the Moon']),
-        crearPregunta('¿Qué canción de rock de los años 80 te gusta más?', ['Sweet Child O\' Mine - Guns N\' Roses', 'Livin\' on a Prayer - Bon Jovi', 'Back in Black - AC/DC']),
-        crearPregunta('¿Quién es tu vocalista favorito de los años 90?', ['Kurt Cobain (Nirvana)', 'Eddie Vedder (Pearl Jam)', 'Chris Cornell (Soundgarden)']),
-        crearPregunta('¿Cuál es tu banda de rock alternativo favorita de los años 2000?', ['Green Day', 'The Strokes', 'Arctic Monkeys']),
-        crearPregunta('¿Qué álbum de rock lanzado en los 2000 consideras el mejor?', ['American Idiot - Green Day', 'Is This It - The Strokes', 'Whatever People Say I Am, That\'s What I\'m Not - Arctic Monkeys'])
-    ];
-
-    let encuesta = crearEncuesta(preguntasIniciales);
-
-    document.getElementById('comenzar-encuesta').addEventListener('click', function() {
-        realizarEncuesta(encuesta);
-        mostrarResultadosConsola(encuesta);
-    });
-});
